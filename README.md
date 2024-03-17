@@ -13,12 +13,22 @@ This project aims to automate the process of fetching research publications and 
 - Python script for populating the publications table
 - Periodic addition of new publications
 
+<p align='center'><b>Current Research and Development Website</b></p>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/existing_page.jpg'>
+
+<p align = 'center'><b>Sample PHP page displaying the database content after population with Python</b></p>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/page1.jpg'>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/page2.jpg'>
+
+### Remarks
+The current website consists of $6303$ records that were added manually till date. After fetching all publications of an author (up to $200$ per faculty member), there are now $8797$ records in the new tables.
+
 ## Prerequisites
 
 Before running the Python script or integrating the frontend pages, ensure that you have the following:
 
-- Python installed on your system
-- MySQL or another compatible database management system installed
+- Python and Apache (in case running the PHP site locally) installed on your system
+- MySQL installed
 - Access to the existing R&D website frontend files and backend server
 
 ## Getting Started
