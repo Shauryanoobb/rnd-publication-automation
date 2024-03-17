@@ -17,9 +17,9 @@ try:
     # Connect to MySQL database
     connection = mysql.connector.connect(
         host='localhost',
-        user='root',
-        password='password',
-        database='scopus'
+        user='root',    # replace with your username
+        password='password',    # replace with your password
+        database='scopus'   # replace with your database name
     )
 
     # Create a cursor to interact with the database
