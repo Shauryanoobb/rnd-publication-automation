@@ -14,7 +14,7 @@ This project aims to automate the process of fetching research publications and 
 - Periodic addition of new publications
 
 <p align='center'><b>Current Research and Development Website</b></p>
-<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/existing_page.jpg'>
+<img style='display: none;' src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/existing_page.jpg'>
 
 <p align = 'center'><b>Sample PHP page displaying the database content after population with Python</b></p>
 <img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/page1.jpg'>
@@ -27,22 +27,63 @@ The current website consists of $6303$ records that were added manually till dat
 
 Before running the Python script or integrating the frontend pages, ensure that you have the following:
 
-- Python and Apache (in case running the PHP site locally) installed on your system
-- MySQL installed
-- Access to the existing R&D website frontend files and backend server
+- [Python](https://python.org/downloads) and [Apache](https://www.apachefriends.org/) (in case running the PHP site locally) installed on your system
+- [MySQL](https://dev.mysql.com/downloads/installer/) installed (this is a command line version, to get the GUI version, check out [MySQL Workbench](https://dev.mysql.com/downloads/workbench/))
 
-## Getting Started
+## Steps to Follow (Local Hosting)
 
+This tutorial will use the **command line version** of MySQL for the database, which is pretty simple and easy to use. <br>
+Moreover, a sample page shall be built using PHP and hosted using XAMPP to display the database contents. _This is for preview only._
+### 0. Setting up Apache Server and Cloning this Repository
+- Install XAMPP server from [here](https://apachefriends.org/).
+- Move to the folder within your File Explorer where XAMPP was installed. The installation would default to `C:\xampp` on Windows.
+- Open the `htdocs` folder at `C:\xampp\htdocs`. Here we will create a clone folder of this repository.
+- Open the terminal in this location by right-clicking on an empty area and selecting "Open in Terminal" (on Windows).
+- Run the following commands in order to clone this git repository.
+  ```
+  git clone https://github.com/Shauryanoobb/rnd-publication-automation.git
+  cd rnd-publication-automation
+  ```
+- Once the cloning completes, the entire code of this repository will be available locally, access it at `C:\xampp\htdocs\rnd-publication-automation`.
+  
 ### 1. Database Setup
+- Install **MySQL Command Line Client** from [here](https://dev.mysql.com/downloads/installer).
+- After the wizard takes you through the setup, you should be able to start your own local MySQL server.
+- Enter your password to access the server. This password is the same as the one provided during the installation of MySQL.
+- Run the following command to create a new database called `scopus`. This will be our main database in this project.
+  ```
+  CREATE DATABASE scopus;
+  ```
+- Once the database `scopus` is successfully created, run the next command to start using it.
+  ```
+  USE scopus;
+  ```
+- Copy and paste **ALL** the SQL commands from the [schema.sql](https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/schema.sql) file to the command line. This will create $4$ tables in the database, which are `publications`, `department`, `authors` and `manages`.
 
-- Use the provided SQL schemas to create the necessary tables in your database.
-- Make sure your database server is running and accessible.
-
-### 2. Python Script
-
-- Run the provided Python script to populate the publications table with sample data.
-- Customize the script to fetch publications from your preferred source or API.
-
+### 2. Python Scripts
+To run the given scripts, you'll need to open the terminal (bash on Linux) application in the directory `C:\xampp\htdocs\rnd-publication-automation`. <br>
+On Windows, python is invoked using the `python` command, while on Linux/Mac, you'll need to use `python3`. The same applies for `pip`/`pip3`. <br><br>
+- Run the following command to install the dependencies used in the project:
+  ```
+  pip install -r requirements.txt
+  ```
+- This repository contains sample XLS files for populating the tables `authors` and `department`. To use them, run the following commands:
+  - for `authors`:
+    ```
+    python authors.py
+    ```
+  - for `department`:
+    ```
+    python department.py
+    ```
+- Filling the database with **past publications** (one-time population): run the following command. It will take a while to fetch all the past publications as the API response takes considerable amount of time.
+  ```
+  python populate.py
+  ```
+- **Periodic update:** the following command fetches only up to $10$ recent publications per author, and hence may be run with a certain frequency throughout the week.
+  ```
+  python periodic.py
+  ```
 ### 3. Frontend Integration
 
 - Merge the sample frontend pages with the existing frontend of the R&D website.
