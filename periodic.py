@@ -1,7 +1,9 @@
 """
-    Welcome to populate.py!
+    Welcome to periodic.py!
     This file will fill your database with publications, those which belong to the 
     all the authors mentioned in the file `auth.xlsx`.
+
+    This file is intended to be executed once in every week (or as needed.)
 
     Necessary settings are mentioned below. Set them up in order to get the application running.
 """
@@ -129,31 +131,27 @@ def updateViaScopusAPI(connection):
             continue
 
         for scopus_id in scopus_id_list:
-            start_index = 0
-            total_publications = 1200  # assuming there are at most 1200 past publications per faculty member
             print("Current author:", auth[4])
 
             # Get all publications related to the current author in batches of 200
-            while start_index < total_publications:
-                data = {
-                    'start': start_index,
-                    'count': 200,
-                    'query': f'au-id({scopus_id})',
-                    'apiKey': apiKey
-                }
+            data = {
+                'start': 0,
+                'count': 10,    # retrieve up to 10 records per week, per Scopus ID
+                'query': f'au-id({scopus_id})',
+                'apiKey': apiKey
+            }
 
-                response = requests.get(url, params=data)
-                if response.status_code == 200:
-                    response = response.json()
-                    pub_array = response['search-results'].get('entry', [])
-                    if len(pub_array) == 0:
-                        print("Exit due to 0 length")
-                        break
-                    insertScopusData(connection=connection, new_data=pub_array, email=auth[0])
-                    start_index += 200  # proceed to the next batch
-                else:
-                    print("API error:", response.json()['service-error']['status']['statusCode'])
+            response = requests.get(url, params=data)
+            if response.status_code == 200:
+                response = response.json()
+                pub_array = response['search-results'].get('entry', [])
+                if len(pub_array) == 0:
+                    print("Exit due to 0 length")
                     break
+                insertScopusData(connection=connection, new_data=pub_array, email=auth[0])
+            else:
+                print("API error:", response.json()['service-error']['status']['statusCode'])
+                break
         # break
         # Enable the above break statement to process only the first author
 
