@@ -17,11 +17,12 @@ This project aims to automate the process of fetching research publications and 
 <img style='display: none;' src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/existing_page.jpg'>
 
 <p align = 'center'><b>Sample PHP page displaying the database content after population with Python</b></p>
-<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/page1.jpg'>
-<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/page2.jpg'>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/pagination.png'>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/final_page_with_affiliations.jpg'>
+<img src='https://github.com/Shauryanoobb/rnd-publication-automation/blob/main/screenshots/batch_processing.jpg'>
 
 ### Remarks
-The current website consists of $6303$ records that were added manually till date. After fetching all publications of an author (up to $200$ per faculty member), there are now $8797$ records in the new tables.
+The current website consists of $6303$ records that were added manually till date. After fetching all publications of an author (up to $200$ per faculty member), there are now $6814$ records in the new tables, considering those affiliated with IIT Indore only. Otherwise, a total of more than $11000$ publications were fetched as shown.
 
 ## Prerequisites
 
@@ -62,20 +63,16 @@ Moreover, a sample page shall be built using PHP and hosted using XAMPP to displ
 
 ### 2. Python Scripts
 To run the given scripts, you'll need to open the terminal (bash on Linux) application in the directory `C:\xampp\htdocs\rnd-publication-automation`. <br>
+Open the files `authors.py`, `populate.py`, and `periodic.py` and follow the instructions given in **each** of them. <br>
 On Windows, python is invoked using the `python` command, while on Linux/Mac, you'll need to use `python3`. The same applies for `pip`/`pip3`. <br><br>
 - Run the following command to install the dependencies used in the project:
   ```
   pip install -r requirements.txt
   ```
 - This repository contains sample XLS files for populating the tables `authors` and `department`. To use them, run the following commands:
-  - for `authors`:
-    ```
-    python authors.py
-    ```
-  - for `department`:
-    ```
-    python department.py
-    ```
+  ```
+  python authors.py
+  ```
 - Filling the database with **past publications** (one-time population): run the following command. It will take a while to fetch all the past publications as the API response takes considerable amount of time.
   ```
   python populate.py
@@ -86,12 +83,16 @@ On Windows, python is invoked using the `python` command, while on Linux/Mac, yo
   ```
 ### 3. Frontend Integration
 
-- Merge the sample frontend pages with the existing frontend of the R&D website.
-- Update the PHP code to fetch publications from the database and display them on the website.
+- Open the `index.php` file and replace the variables with your database connection parameters.
+- Open the XAMPP application. On Windows, you may use the Start menu to search for it.
+- Start the Apache Server.
+- Frontend is good to go! Go to [this link](https://localhost/rnd-publication-automation) to see the results of the database.
 
 ## Usage
 
-1. Run the Python script periodically to update the publications table with new data.
-2. Access the R&D website to view the latest research publications.
+1. For the first time, you'll need to just run `populate.py`. This will take a while.
+2. Run `periodic.py` periodically to update the publications table with new data.
+3. You may need to check the weekly quotas of your API keys obtained from [Elsevier Developer Portal.](https://dev.elsevier.com/apikey/manage)
+4. Access the [R&D website](https://localhost/rnd-publication-automation) to view the latest research publications.
 
 
