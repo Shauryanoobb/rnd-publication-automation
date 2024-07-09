@@ -1,3 +1,5 @@
+# this is a testing file to measure the accuracy of the solution
+
 import requests
 import mysql.connector
 import pandas as pd
